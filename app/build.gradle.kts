@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlinKapt)
 }
 
 android {
@@ -20,9 +21,18 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+
+        debug {
+            applicationIdSuffix = ".debug"
+            isMinifyEnabled = false
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -39,6 +49,23 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    implementation(libs.dagger)
+    implementation(libs.androidx.browser)
+    kapt(libs.daggerCompiler)
+
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+
+    implementation (libs.androidx.navigation.fragment.ktx)
+
+    implementation(libs.glide)
+
+    implementation (libs.lottie)
+
+    debugImplementation (libs.chucker)
+    releaseImplementation (libs.chucker.noop)
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
