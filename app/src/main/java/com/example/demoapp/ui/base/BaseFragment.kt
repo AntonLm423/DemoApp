@@ -21,6 +21,7 @@ import androidx.viewbinding.ViewBinding
 import com.airbnb.lottie.LottieAnimationView
 import com.example.demoapp.R
 import com.example.demoapp.data.local.prefs.PreferenceStorage
+import com.example.demoapp.di.ViewModelFactory
 import com.example.demoapp.extensions.addSystemWindowInsetToMargin
 import com.example.demoapp.extensions.dpToPx
 import com.example.demoapp.extensions.getColorCompat
@@ -29,26 +30,25 @@ import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
 
-    companion object {
-        private const val BOTTOM_NAVIGATION_VIEW_HEIGHT = 56
-    }
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     @Inject
     lateinit var preferenceStorage: PreferenceStorage
 
-    protected var connectivityManager: ConnectivityManager? = null
+    abstract val destinationId: Int?
 
     protected var viewBinding: ViewBinding? = null
-
-    open val showBottomNavigationView: Boolean = false
-
-    abstract val destinationId: Int?
 
     /** добавлять ли вставки, при false - контент под системными окнами (edge-to-edge) */
     open val topInset = true
     open val bottomInset = true
     open val leftInset = true
     open val rightInset = true
+
+    companion object {
+        private const val BOTTOM_NAVIGATION_VIEW_HEIGHT = 56
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

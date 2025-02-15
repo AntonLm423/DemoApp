@@ -9,4 +9,7 @@
 
     <!-- Common -->
     <string name="common_not_yet_implemented">Функционал ещё не реализован</string>
+    <string name="common_update">Обновить</string>
+    <string name="common_no_internet">Похоже, пропал интернет</string>
+    <string name="common_something_went_wrong">Что-то пошло не так</string>
 </resources>

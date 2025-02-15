@@ -52,6 +52,8 @@ dependencies {
 
     implementation(libs.dagger)
     implementation(libs.androidx.browser)
+    implementation(libs.androidx.paging.common.android)
+    implementation(libs.androidx.paging.runtime.ktx)
     kapt(libs.daggerCompiler)
 
     implementation(libs.retrofit)
