@@ -23,6 +23,7 @@ pagingRuntimeKtx = "3.3.6"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-android-processor = { module = "com.google.dagger:dagger-android-processor", version.ref = "dagger" }
 dagger-android-support = { module = "com.google.dagger:dagger-android-support", version.ref = "dagger" }

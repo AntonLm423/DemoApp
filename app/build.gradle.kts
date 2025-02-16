@@ -26,6 +26,7 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             isMinifyEnabled = false
+            isDebuggable = true
         }
     }
 
@@ -56,6 +57,7 @@ dependencies {
     kapt(libs.dagger.android.processor)
 
     implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     implementation(libs.gson)
 
     implementation(libs.androidx.navigation.fragment.ktx)

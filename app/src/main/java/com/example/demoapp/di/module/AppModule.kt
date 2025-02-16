@@ -7,6 +7,7 @@ import com.example.demoapp.data.local.prefs.PreferenceHelper.defaultPrefs
 import com.example.demoapp.data.local.prefs.PreferenceStorage
 import com.example.demoapp.data.remote.ApiService
 import com.example.demoapp.data.remote.AuthInterceptor
+import com.example.demoapp.data.remote.CustomHeadersInterceptor
 import com.example.demoapp.di.App
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -14,6 +15,7 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -26,6 +28,9 @@ open class AppModule {
         const val BASE_URL = "https://api.kinopoisk.dev/"
 
         const val HEADER_X_API_KEY = "X-API-KEY"
+        const val HEADER_ACCEPT = "accept"
+
+        const val CONTENT_TYPE = "application/json"
     }
 
     @Provides
@@ -48,9 +53,11 @@ open class AppModule {
     @Singleton
     fun provideApiService(
         client: OkHttpClient,
+        gson: Gson
     ): ApiService {
         return Retrofit.Builder()
             .client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(BASE_URL)
             .build()
             .create(ApiService::class.java)
@@ -66,6 +73,7 @@ open class AppModule {
             readTimeout(CONNECTION_TIMEOUT, TimeUnit.MILLISECONDS)
             writeTimeout(CONNECTION_TIMEOUT, TimeUnit.MILLISECONDS)
             addInterceptor(AuthInterceptor())
+            addInterceptor(CustomHeadersInterceptor())
             addInterceptor(ChuckerInterceptor(app))
         }.build()
     }

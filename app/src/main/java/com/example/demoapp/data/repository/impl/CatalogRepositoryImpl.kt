@@ -1,5 +1,6 @@
 package com.example.demoapp.data.repository.impl
 
+import android.util.Log
 import androidx.paging.PagingData
 import com.example.demoapp.data.datasource.MoviesDataSource
 import com.example.demoapp.data.model.Movie
@@ -16,8 +17,8 @@ class CatalogRepositoryImpl @Inject constructor(
 ) : BaseRepository(), CatalogRepository {
 
     override suspend fun searchMovies(query: String, page: Int, limit: Int): PagingListResponse<Movie> {
+        Log.d("asdw", "123")
         val result = apiService.searchMovies(query, page, limit)
-
         return PagingListResponse(result.total, result.movies)
     }
 
