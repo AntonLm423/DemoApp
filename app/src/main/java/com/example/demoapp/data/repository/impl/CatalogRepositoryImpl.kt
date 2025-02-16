@@ -15,26 +15,18 @@ class CatalogRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : BaseRepository(), CatalogRepository {
 
-    override suspend fun getMovies(page: Int, limit: Int): PagingListResponse<Movie> {
-        val result = apiService.getMovies(
-            page = page,
-            limit = limit
-        )
+    override suspend fun searchMovies(query: String, page: Int, limit: Int): PagingListResponse<Movie> {
+        val result = apiService.searchMovies(query, page, limit)
 
-        return PagingListResponse(
-            result.total,
-            result.movies
-        )
+        return PagingListResponse(result.total, result.movies)
     }
 
-    override fun getMoviesFlow(dataSource: MoviesDataSource): Flow<PagingData<Movie>> {
+    override fun getMoviesFlow(query: String): Flow<PagingData<Movie>> {
         return createPager(
-            dataSource,
+            MoviesDataSource(query = query, repository = this),
             pageSize = CatalogRepository.PAGE_SIZE,
             initialLoadSize = CatalogRepository.INITIAL_PAGE_SIZE,
             prefetchDistance = CatalogRepository.PREFETCH_DISTANCE,
         ).flow
     }
-
-
 }

@@ -1,10 +1,9 @@
 package com.example.demoapp.data.repository
 
 import androidx.paging.PagingData
-import com.example.demoapp.data.datasource.MoviesDataSource
 import com.example.demoapp.data.model.Movie
-import kotlinx.coroutines.flow.Flow
 import com.example.demoapp.ui.base.paging.PagingListResponse
+import kotlinx.coroutines.flow.Flow
 
 interface CatalogRepository {
 
@@ -14,8 +13,7 @@ interface CatalogRepository {
         const val PREFETCH_DISTANCE = 10
     }
 
-    suspend fun getMovies(page: Int, limit: Int): PagingListResponse<Movie>
+    suspend fun searchMovies(query: String, page: Int, limit: Int): PagingListResponse<Movie>
 
-    fun getMoviesFlow(dataSource: MoviesDataSource): Flow<PagingData<Movie>>
-
+    fun getMoviesFlow(query: String): Flow<PagingData<Movie>>
 }

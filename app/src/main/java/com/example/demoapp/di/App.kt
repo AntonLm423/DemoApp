@@ -1,16 +1,12 @@
 package com.example.demoapp.di
 
-import android.app.Application
-import com.example.demoapp.data.local.prefs.PreferenceStorage
 import com.example.demoapp.di.comonent.DaggerAppComponent
-import javax.inject.Inject
+import dagger.android.AndroidInjector
+import dagger.android.support.DaggerApplication
 
-const val TAG = "AppTag"
+class App : DaggerApplication() {
 
-class App : Application() {
-
-    @Inject
-    lateinit var preferenceStorage: PreferenceStorage
-
-    val appComponent = DaggerAppComponent.create()
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent.builder().create(this)
+    }
 }

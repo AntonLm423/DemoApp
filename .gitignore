@@ -12,4 +12,14 @@
 /captures
 .externalNativeBuild
 .cxx
+*.idea/
 local.properties
+/app/.idea/.gitignore
+/.idea/deploymentTargetSelector.xml
+/app/.idea/caches/deviceStreaming.xml
+/app/.idea/gradle.xml
+/app/.idea/migrations.xml
+/app/.idea/misc.xml
+/app/.idea/runConfigurations.xml
+/.idea/vcs.xml
+/app/.idea/vcs.xml

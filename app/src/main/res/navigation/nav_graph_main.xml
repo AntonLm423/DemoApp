@@ -10,4 +10,15 @@
         android:name="com.example.demoapp.ui.main.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/catalogFragment"
+        android:name="com.example.demoapp.ui.catalog.CatalogFragment"
+        android:label="CatalogFragment"
+        tools:layout="@layout/fragment_catalog" />
+    <action
+        android:id="@+id/action_global_catalogFragment"
+        app:destination="@id/catalogFragment" />
+    <action
+        android:id="@+id/action_global_mainFragment"
+        app:destination="@id/mainFragment" />
 </navigation>

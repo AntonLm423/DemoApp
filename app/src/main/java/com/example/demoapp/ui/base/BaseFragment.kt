@@ -1,31 +1,20 @@
 package com.example.demoapp.ui.base
 
-import android.annotation.SuppressLint
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.pm.PackageManager
-import android.net.ConnectivityManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
-import androidx.annotation.IdRes
-import androidx.browser.customtabs.CustomTabColorSchemeParams
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.airbnb.lottie.LottieAnimationView
-import com.example.demoapp.R
 import com.example.demoapp.data.local.prefs.PreferenceStorage
 import com.example.demoapp.di.ViewModelFactory
 import com.example.demoapp.extensions.addSystemWindowInsetToMargin
 import com.example.demoapp.extensions.dpToPx
-import com.example.demoapp.extensions.getColorCompat
 import com.example.demoapp.ui.MainActivity
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
@@ -48,6 +37,11 @@ abstract class BaseFragment : Fragment() {
 
     companion object {
         private const val BOTTOM_NAVIGATION_VIEW_HEIGHT = 56
+    }
+
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
