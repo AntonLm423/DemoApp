@@ -120,7 +120,7 @@ abstract class BaseFragment : Fragment() {
                 onUpdatePaddingAction?.invoke(isOpen)
 
                 view?.updatePadding(
-                    bottom = if(isOpen) {
+                    bottom = if (isOpen) {
                         height + (view?.paddingBottom ?: 0)
                     } else {
                         0

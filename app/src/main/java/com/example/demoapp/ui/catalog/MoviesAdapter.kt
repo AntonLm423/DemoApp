@@ -1,15 +1,10 @@
 package com.example.demoapp.ui.catalog
 
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.ColorFilter
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import com.example.demoapp.R
 import com.example.demoapp.data.model.Movie
 import com.example.demoapp.databinding.ItemListMovieBinding
-import com.example.demoapp.extensions.getColorCompat
 import com.example.demoapp.extensions.inflateView
 import com.example.demoapp.extensions.loadImage
 import com.example.demoapp.extensions.setTextOrGone
@@ -59,7 +54,7 @@ class MoviesAdapter(
                 notifyItemChanged(absoluteAdapterPosition, Movie.Payloads.FavoriteState(newStatus))
                 onItemInteractionListener.updateFavoriteStatus(id = currentItem.id, inFavorite = newStatus)
             }
-            setImageResource(if(inFavorite) R.drawable.ic_favorite_selected else R.drawable.ic_favorite)
+            setImageResource(if (inFavorite) R.drawable.ic_favorite_selected else R.drawable.ic_favorite)
         }
     }
 

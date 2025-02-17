@@ -12,7 +12,7 @@ abstract class BaseRepository {
     protected fun <T> doRequest(request: suspend () -> T) = flow {
         emit(Response.success(data = request()))
     }.flowOn(Dispatchers.IO).catch { exception ->
-        if(exception is CancellationException) {
+        if (exception is CancellationException) {
             emit(Response.cancel())
         } else {
             emit(Response.error(e = exception))
