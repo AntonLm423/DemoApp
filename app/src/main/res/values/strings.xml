@@ -12,4 +12,10 @@
     <string name="common_update">Обновить</string>
     <string name="common_no_internet">Похоже, пропал интернет</string>
     <string name="common_something_went_wrong">Что-то пошло не так</string>
+    <string name="common_error_title">Произошла ошибка</string>
+    <string name="common_error_description">Попробуйте повторить запрос</string>
+
+    <!-- Catalog -->
+    <string name="catalog_initial_description">Начните вводить…</string>
+    <string name="catalog_nothing_found">Ничего не найдено, попробуйте изменить запрос</string>
 </resources>

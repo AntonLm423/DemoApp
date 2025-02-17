@@ -7,21 +7,20 @@ abstract class BasePagingSource<T : Any> : PagingSource<Int, T>() {
 
     companion object {
         const val DEFAULT_PREFETCH_DISTANCE = 5
-        const val DEFAULT_OFFSET = 0
+        const val DEFAULT_PAGE_NUMBER = 1
         const val DEFAULT_LIMIT = 10
     }
 
     var stopLoading = false
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
-        val offset = params.key ?: DEFAULT_OFFSET
+        val pageNumber = params.key ?: DEFAULT_PAGE_NUMBER
         val limit = params.loadSize
-        val pageNumber = (offset / limit) + 1
 
         return try {
             val result = loadPage(pageNumber, limit)
-            val nextOffset = offset + result.items.orEmpty().size
-            val nextKeyNull = (result.total ?: 0) < limit || result.items.orEmpty().isEmpty()
+            val nextPage = pageNumber + 1
+            val nextKeyNull = result.items.orEmpty().isEmpty()
 
             LoadResult.Page(
                 data = result.items.orEmpty(),
@@ -29,7 +28,7 @@ abstract class BasePagingSource<T : Any> : PagingSource<Int, T>() {
                 nextKey = if (stopLoading || nextKeyNull) {
                     null
                 } else {
-                    nextOffset
+                    nextPage
                 },
             )
         } catch (ex: Exception) {

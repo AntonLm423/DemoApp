@@ -18,10 +18,11 @@ interface PagingViewModel {
 
     fun <T : Any> MutableLiveData<PagingData<T>>.launchPagingData(block: () -> Flow<PagingData<T>>): Job
 
-    fun MutableLiveData<Response<Empty>>.bindPagingState(loadState: CombinedLoadStates)
+    /**
+    * Boolean - endOfPaginationReached
+    */
+    fun MutableLiveData<Response<Boolean>>.bindPagingState(loadState: CombinedLoadStates)
 }
-
-class Empty
 
 class PagingViewModelDelegate @Inject constructor() : BaseViewModel(), PagingViewModel {
 
@@ -30,9 +31,8 @@ class PagingViewModelDelegate @Inject constructor() : BaseViewModel(), PagingVie
             block().cachedIn(viewModelScope).collectLatest { this@launchPagingData.postValue(it) }
         }
 
-    override fun MutableLiveData<Response<Empty>>.bindPagingState(loadState: CombinedLoadStates) {
+    override fun MutableLiveData<Response<Boolean>>.bindPagingState(loadState: CombinedLoadStates) {
         when (loadState.source.refresh) {
-
             is LoadState.Loading -> this.postValue(Response.loading())
 
             is LoadState.Error -> {
@@ -41,7 +41,7 @@ class PagingViewModelDelegate @Inject constructor() : BaseViewModel(), PagingVie
             }
 
             is LoadState.NotLoading -> {
-                this.postValue(Response.success(Empty()))
+                this.postValue(Response.success(loadState.append.endOfPaginationReached))
             }
         }
     }

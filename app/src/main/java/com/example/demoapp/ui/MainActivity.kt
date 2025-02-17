@@ -1,6 +1,5 @@
 package com.example.demoapp.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.example.demoapp.R
 import com.example.demoapp.databinding.ActivityMainBinding
-import com.example.demoapp.extensions.addSystemWindowInsetToPadding
 import com.example.demoapp.extensions.safeNavigate
 import com.google.android.material.navigation.NavigationBarView
 import dagger.android.AndroidInjection
@@ -104,7 +102,6 @@ class MainActivity : AppCompatActivity() {
     private fun initNavigation() = with(binding.bottomNavigationView) {
         setOnItemSelectedListener(onItemSelectedListener)
         setOnItemReselectedListener(onItemReselectedListener)
-        addSystemWindowInsetToPadding(bottom = true)
     }
 
     fun setBottomNavigationViewVisible(isVisible: Boolean) {

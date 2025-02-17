@@ -7,6 +7,8 @@
     <color name="white">#ffffff</color>
     <color name="black_95">#F2000000</color>
 
+    <color name="snackbar_background">#1C2126</color>
+
     <color name="seed">#3d6a1c</color>
     <color name="md_theme_primary">#3C691B</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>

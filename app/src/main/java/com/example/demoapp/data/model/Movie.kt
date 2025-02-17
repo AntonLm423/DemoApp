@@ -1,5 +1,7 @@
 package com.example.demoapp.data.model
 
+import androidx.recyclerview.widget.DiffUtil
+
 data class Movie(
     val ageRating: Int?,
     val alternativeName: String?,
@@ -9,7 +11,7 @@ data class Movie(
     val enName: String?,
     val externalId: ExternalId?,
     val genres: List<Genre>?,
-    val id: Int?,
+    val id: Int,
     val isSeries: Boolean?,
     val logo: Logo?,
     val movieLength: Int?,
@@ -29,5 +31,38 @@ data class Movie(
     val type: String?,
     val typeNumber: Int?,
     val votes: Votes?,
-    val year: Int?
-)
+    val year: Int?,
+
+    /* Local */
+    var inFavorite: Boolean = false
+) {
+
+    sealed class Payloads {
+        data class FavoriteState(val inFavorite: Boolean) : Payloads()
+    }
+
+    companion object {
+
+        val diffCallback = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(
+                oldItem: Movie,
+                newItem: Movie
+            ): Boolean = oldItem.id == newItem.id
+
+            override fun areContentsTheSame(
+                oldItem: Movie,
+                newItem: Movie
+            ): Boolean = oldItem == newItem
+
+            override fun getChangePayload(oldItem: Movie, newItem: Movie): Any? {
+                return when {
+                    oldItem.inFavorite != newItem.inFavorite -> {
+                        Payloads.FavoriteState(newItem.inFavorite)
+                    }
+
+                    else -> super.getChangePayload(oldItem, newItem)
+                }
+            }
+        }
+    }
+}

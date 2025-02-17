@@ -8,12 +8,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 import com.example.demoapp.data.local.prefs.PreferenceStorage
 import com.example.demoapp.di.ViewModelFactory
 import com.example.demoapp.extensions.addSystemWindowInsetToMargin
-import com.example.demoapp.extensions.dpToPx
 import com.example.demoapp.ui.MainActivity
+import com.example.demoapp.ui.util.SnackbarManager
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -29,15 +31,13 @@ abstract class BaseFragment : Fragment() {
 
     protected var viewBinding: ViewBinding? = null
 
+    protected val snackbarManager = SnackbarManager()
+
     /** добавлять ли вставки, при false - контент под системными окнами (edge-to-edge) */
     open val topInset = true
-    open val bottomInset = true
+    open val bottomInset = false
     open val leftInset = true
     open val rightInset = true
-
-    companion object {
-        private const val BOTTOM_NAVIGATION_VIEW_HEIGHT = 56
-    }
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -119,13 +119,11 @@ abstract class BaseFragment : Fragment() {
                 setBottomNavigationViewVisible(!isOpen)
                 onUpdatePaddingAction?.invoke(isOpen)
 
-                val bottomNavHeight = BOTTOM_NAVIGATION_VIEW_HEIGHT.dpToPx()
-
                 view?.updatePadding(
                     bottom = if(isOpen) {
-                        height + (view?.paddingBottom ?: 0) - bottomNavHeight
+                        height + (view?.paddingBottom ?: 0)
                     } else {
-                        bottomNavHeight
+                        0
                     }
                 )
             }
@@ -157,5 +155,9 @@ abstract class BaseFragment : Fragment() {
                 insetsCompat
             }
         }
+    }
+
+    protected inline fun <T> LiveData<T>.observe(crossinline block: (T) -> Unit) {
+        observe(viewLifecycleOwner, Observer { t -> block.invoke(t) })
     }
 }

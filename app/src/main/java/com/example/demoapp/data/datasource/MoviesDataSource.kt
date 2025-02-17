@@ -15,7 +15,7 @@ class MoviesDataSource(
             return PagingListResponse(0, emptyList())
         } else {
             val response = repository.searchMovies(query, page, limit)
-            return PagingListResponse(response.total, response.items)
+            return PagingListResponse(response.totalPages, response.items)
         }
     }
 }

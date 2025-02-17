@@ -36,34 +36,41 @@ class PagingLoadStateAdapter(
 class PagingLoadStateViewHolder(parent: ViewGroup, onRetry: () -> Unit) :
     BindingViewHolder<ItemPagingFooterBinding>(parent, R.layout.item_paging_footer) {
 
+    private companion object {
+        const val CHILD_LOADING = 0
+        const val CHILD_ERROR = 1
+    }
+
     init {
         itemBinding.buttonPagingRetry.setOnClickListener { onRetry.invoke() }
     }
 
-    fun bind(loadState: LoadState) = with(itemBinding) {
-        when (loadState) {
-            is LoadState.Loading -> {
-                root.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-            }
-
-            is LoadState.Error -> {
-                root.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                handleErrorState()
-            }
-
-            else -> {}
+    fun bind(loadState: LoadState) = when (loadState) {
+        is LoadState.Loading -> {
+            handleLoadingState()
         }
+
+        is LoadState.Error -> {
+            handleErrorState()
+        }
+
+        else -> {}
+    }
+
+    private fun handleLoadingState() = with(itemBinding) {
+        root.displayedChild = CHILD_LOADING
     }
 
     private fun handleErrorState() = with(itemBinding) {
         if (!itemBinding.root.context.isInternetAvailable()) {
             textViewPagingErrorDescription.isVisible = true
-            textViewPagingErrorTitle.text = itemView.resources.getString(R.string.common_no_internet)
-            textViewPagingErrorDescription.text = itemView.resources.getString(R.string.common_no_internet)
+            textViewPagingErrorTitle.text = context.getString(R.string.common_no_internet)
+            textViewPagingErrorDescription.text = context.getString(R.string.common_error_description)
         } else {
             textViewPagingErrorDescription.isVisible = false
             textViewPagingErrorTitle.text = itemView.resources.getString(R.string.common_something_went_wrong)
         }
+        root.displayedChild = CHILD_ERROR
     }
 
     override fun createBinding(view: View): ItemPagingFooterBinding {
