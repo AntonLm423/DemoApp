@@ -5,6 +5,7 @@
 
 Реализовано на данный момент: Работа с сетью, DI, навигация, локальное хранилище избранных фильмов, экран поиска
 
-![**Screenshots**](https://github.com/user-attachments/assets/6cf2ecf0-6a8f-4b1c-817c-0a70984cd637)
+
+![**Screenshots**](https://github.com/user-attachments/assets/c4ee5e0b-c222-491d-9996-817b01746b10)
 
 
